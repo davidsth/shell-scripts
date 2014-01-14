@@ -11,6 +11,6 @@ fi
 
 while [ 1 ]; do
     sleep $snooze;
-    notify-send "Wake dad up";
+    notify-send "Get up and move!";
 done
 

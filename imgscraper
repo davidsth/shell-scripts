@@ -1,7 +1,0 @@
-#!/bin/sh
-
-wget -O - $1 |
-grep -Eo 'images.4chan.org/[^"]+' |
-uniq |
-xargs wget
-
