@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# http://vimeo.com/71441709
+
+
+if [ -n "$1" ]; then
+    snooze="$1";
+else
+    snooze="30m"
+fi
+
+while [ 1 ]; do
+    sleep $snooze;
+    notify-send "Wake dad up";
+done
+

@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# It's better if you chmod this file to: 700
+# and chwon to root
+
+if [ $1 = "lock" ]; then
+    echo "hiding $2 and locking..."
+    chmod -rx $2 && mv $2 .$2
+    echo "Done Locking."
+
+elif [ $1 = "unlock" ]; then
+    echo "unlocking $2 ..."
+    mv $2 ${2//./} && chmod +rx ${2//./}  
+    echo "Done."
+fi
+
+

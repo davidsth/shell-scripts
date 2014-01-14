@@ -1,0 +1,35 @@
+#!/bin/bash
+
+usage() {
+	echo "Usage: upload [HOST] [FILE]"
+	echo "Supported hosts: ompldr goput imgur"
+	exit 1
+}
+
+if [[ -z "$2" ]]; then
+	usage
+fi
+
+case "$1" in
+	ompldr)
+		curl --silent -i -F name=file1 -F file1="@${2}" http://ompldr.org/upload |
+		grep --color=never -Eom 1 'http.?://ompldr\.org/[[:alnum:]]*/[^<]' ||
+		echo "Upload failed. Maybe you got throttled?"
+		;;
+	goput)
+		curl --silent 'http://goput.it/handle.php' \
+            -F file1="@${2}" -F HANDLE_METHOD=UPLOAD |
+        grep --color=never --extended-regexp --only-matching \
+            'http://goput\.it/[[:alnum:]]*\.(png|jpg|gif)'
+    ;;
+	imgur)
+        echo "${2}"
+        curl -sF "image=@${2}" -F "key=486690f872c678126a2c09a9e196ce1b" http://imgur.com/api/upload.xml |
+        grep -Eo "<original_image>(.)*</original_image>"|
+        grep -Eo "http://i.imgur.com/[^<]*"
+        ;;
+	*)
+		echo "Error: host '$1' is not supported"
+		usage
+		;;
+esac

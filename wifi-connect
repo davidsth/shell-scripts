@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ip link set wlan0 up
+netcfg wlan0-nepal
